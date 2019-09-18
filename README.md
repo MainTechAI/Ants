@@ -26,4 +26,12 @@
 
 11 epoch ended, best result: 164.0 shortest path [0, 4, 11, 2, 13, 12, 7, 3, 10, 14, 6, 5, 9, 8, 1]
 
+21 epoch ended, best result: 163.0 shortest path [0, 13, 14, 6, 9, 2, 8, 1, 4, 3, 7, 10, 5, 11, 12]
+
+26 epoch ended, best result: 154.0 shortest path [0, 8, 4, 3, 7, 10, 14, 6, 12, 9, 2, 1, 13, 11, 5]
+
+28 epoch ended, best result: 140.0 shortest path [0, 13, 11, 4, 2, 8, 1, 7, 12, 9, 5, 6, 14, 10, 3]
+
+50 epoch ended, best result: 140.0 shortest path [0, 13, 11, 4, 2, 8, 1, 7, 12, 9, 5, 6, 14, 10, 3]
+
 Exploration completed, best result: 140.0
