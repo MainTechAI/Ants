@@ -16,15 +16,15 @@ from numpy.random import choice
 # Будем считать что начальная точка для всех муравьёв одинаковая
 # start - 0
 # =============================================================================
-
-V=15             #количество вершин в графе
-#a=0.5 #нужно?
-b=70 #  % шанс на отклонение от дороги с самым большим числом феромонов
+random.seed(7)
+V=20 #количество вершин в графе
+b=10 #  % шанс на отклонение от основоной дороги с самым большим числом феромонов
 number_of_ants=100
 pheromone_const=0.1 #константное значение выделяемого феромона для каждого муравья
 vanishing_const=0.7
-symmetrically=True
+symmetrically=False
 pheromone_min=2.5
+pheromone_max=10.0#пока не реализованно
 
 #инициализация матрицы растояний рандомными числами от 1 до 50
 mylist = []
@@ -34,16 +34,14 @@ for i in range(0,int((V*(V-1))/2)):
 distance_matrix = np.zeros([V, V])
 distance_matrix[np.triu_indices(V, 1)] = mylist
 distance_matrix += distance_matrix.T
-#print(distance_matrix)
 
 #инициализация матрицы ферамонов рандомными положительными числами
 mylist = np.random.uniform(low=2.8, high=3.1, size=(int((V*(V-1))/2),))
 pheromone_matrix = np.zeros([V, V])
 pheromone_matrix[np.triu_indices(V, 1)] = mylist
 pheromone_matrix += pheromone_matrix.T
-#print(pheromone_matrix)
 
-shortest_distance=9999999999#не так, переделать
+shortest_distance=float("inf")
 shortest_path=[]
 
 
@@ -52,7 +50,7 @@ shortest_path=[]
 class Place():
     class Ant:
         def __init__(self):
-            self.start_location=0
+            self.start_location=0 #может быть разной в теории
             self.current_location=0
             self.location_history=[self.start_location,]
             self.distance=0
@@ -83,45 +81,40 @@ class Place():
             
         def make_decision(self):
             self.find_possible_paths()
-            total=0.0
             highest_phero_path=0
             highest_value=0
             pheromone=0.0
-#            print('self.posssible_paths',self.posssible_paths)
             for path in self.posssible_paths:
-#                print(self.current_location,'self.current_location')
-#                print(path,'path')
+
                 pheromone=pheromone_matrix[self.current_location][path]
-                self.attraction[path]=pheromone#pow(pheromone, a)#*(1/b)
+                self.attraction[path]=pheromone
                 if(pheromone>=highest_value):
                     highest_phero_path=path
                     highest_value=pheromone
-                total+=self.attraction[path]
-#                print('attraction',self.attraction[path])
               
-            total-=highest_value
             self.attraction[highest_phero_path]=0.0
-            for path in self.posssible_paths:
-                self.attraction[path] /= total 
-#                print(self.attraction[path])
+            p = np.array(self.attraction)
+            p /= p.sum() 
+            
             
             rand=randrange(100)
 
             if(rand>b or len(self.posssible_paths)==1):
                 chosen_path=highest_phero_path
             else:
+#                print('\n attraction:')
                 self.attraction[highest_phero_path]=0.0
-                chosen_path = choice(range(0,V), 1,p=self.attraction,replace=False)
+#                for count in range(0,V):
+#                    print(self.attraction[count])
+                chosen_path = choice(range(0,V), 1,p=p) #,replace=False
 #                print(chosen_path)
                 chosen_path=chosen_path[0] 
                        
-#            print(chosen_path)
             
             self.update_pheromone(chosen_path)
             self.location_history.append(chosen_path)
             self.distance+=distance_matrix[self.current_location][chosen_path]
             self.current_location=chosen_path
-#            print('self.distance',self.distance)
 
             for q in range (0,V):#!!!
                 self.attraction[q]=0.0
@@ -134,7 +127,6 @@ class Place():
             if(self.distance < shortest_distance):
                 shortest_distance=self.distance
                 shortest_path=self.location_history
-#            print('end self.distance',self.distance)
         
         
         def lets_go(self):
@@ -195,7 +187,7 @@ class Place():
 def main():
     print('Start')
     x=Place()    
-    x.start_exploration(50)
+    x.start_exploration(250)
     print('Exploration completed, best result:', shortest_distance)
     
     
