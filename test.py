@@ -17,9 +17,9 @@ from numpy.random import choice
 # start - 0
 # =============================================================================
 
-V=15             #количество вершин в графе
+V=20             #количество вершин в графе
 #a=0.5 #нужно?
-b=70 #  % шанс на отклонение от дороги с самым большим числом феромонов
+b=90 #  % шанс на отклонение от основоной дороги с самым большим числом феромонов
 number_of_ants=100
 pheromone_const=0.1 #константное значение выделяемого феромона для каждого муравья
 vanishing_const=0.7
@@ -43,7 +43,7 @@ pheromone_matrix[np.triu_indices(V, 1)] = mylist
 pheromone_matrix += pheromone_matrix.T
 #print(pheromone_matrix)
 
-shortest_distance=9999999999#не так, переделать
+shortest_distance=float("inf")
 shortest_path=[]
 
 
@@ -101,8 +101,11 @@ class Place():
               
             total-=highest_value
             self.attraction[highest_phero_path]=0.0
-            for path in self.posssible_paths:
-                self.attraction[path] /= total 
+            p = np.array(self.attraction)
+            p /= p.sum() 
+            
+#            for path in self.posssible_paths:
+#                self.attraction[path] /= total 
 #                print(self.attraction[path])
             
             rand=randrange(100)
@@ -110,8 +113,11 @@ class Place():
             if(rand>b or len(self.posssible_paths)==1):
                 chosen_path=highest_phero_path
             else:
+#                print('\n attraction:')
                 self.attraction[highest_phero_path]=0.0
-                chosen_path = choice(range(0,V), 1,p=self.attraction,replace=False)
+#                for count in range(0,V):
+#                    print(self.attraction[count])
+                chosen_path = choice(range(0,V), 1,p=p) #,replace=False
 #                print(chosen_path)
                 chosen_path=chosen_path[0] 
                        
@@ -195,7 +201,7 @@ class Place():
 def main():
     print('Start')
     x=Place()    
-    x.start_exploration(50)
+    x.start_exploration(250)
     print('Exploration completed, best result:', shortest_distance)
     
     
