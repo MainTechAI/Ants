@@ -22,7 +22,7 @@ b=10 #  % шанс на отклонение от основоной дорог�
 number_of_ants=100
 pheromone_const=0.1 #константное значение выделяемого феромона для каждого муравья
 vanishing_const=0.7
-symmetrically=False
+symmetrically=False #феромон оставляется в одну сторону или в обе
 pheromone_min=2.5
 pheromone_max=10.0#пока не реализованно
 
@@ -102,12 +102,11 @@ class Place():
             if(rand>b or len(self.posssible_paths)==1):
                 chosen_path=highest_phero_path
             else:
-#                print('\n attraction:')
                 self.attraction[highest_phero_path]=0.0
+#                print('\n attraction:')
 #                for count in range(0,V):
 #                    print(self.attraction[count])
                 chosen_path = choice(range(0,V), 1,p=p) #,replace=False
-#                print(chosen_path)
                 chosen_path=chosen_path[0] 
                        
             
@@ -116,7 +115,7 @@ class Place():
             self.distance+=distance_matrix[self.current_location][chosen_path]
             self.current_location=chosen_path
 
-            for q in range (0,V):#!!!
+            for q in range (0,V):
                 self.attraction[q]=0.0
             
         
