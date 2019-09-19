@@ -18,13 +18,13 @@ from numpy.random import choice
 # =============================================================================
 random.seed(7)
 V=20 #количество вершин в графе
-b=10 #  % шанс на отклонение от основоной дороги с самым большим числом феромонов
+b=50 #  % шанс на отклонение от основоной дороги с самым большим числом феромонов
 number_of_ants=100
 pheromone_const=0.1 #константное значение выделяемого феромона для каждого муравья
 vanishing_const=0.7
 symmetrically=False #феромон оставляется в одну сторону или в обе
 pheromone_min=2.5
-pheromone_max=10.0#пока не реализованно
+pheromone_max=100.0
 
 #инициализация матрицы растояний рандомными числами от 1 до 50
 mylist = []
@@ -64,8 +64,12 @@ class Place():
         def update_pheromone(self, next_path):
             #матрица феромона=конст_феромон*длину_пути
             pheromone_matrix[self.current_location][next_path]+=distance_matrix[self.current_location][next_path]*pheromone_const
+            if(pheromone_matrix[self.current_location][next_path]>pheromone_max):
+                pheromone_matrix[self.current_location][next_path]=pheromone_max
             if(symmetrically==True):
                 pheromone_matrix[next_path][self.current_location]+=distance_matrix[self.current_location][next_path]*pheromone_const
+                if(pheromone_matrix[next_path][self.current_location]>pheromone_max):
+                    pheromone_matrix[next_path][self.current_location]=pheromone_max
     
     
         def find_possible_paths(self):
