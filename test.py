@@ -18,13 +18,16 @@ from numpy.random import choice
 # =============================================================================
 random.seed(7)
 V=20 #количество вершин в графе
-b=50 #  % шанс на отклонение от основоной дороги с самым большим числом феромонов
-number_of_ants=100
-pheromone_const=0.1 #константное значение выделяемого феромона для каждого муравья
-vanishing_const=0.7
+b=30 #  % шанс на отклонение от основоной дороги с самым большим числом феромонов
+number_of_ants=150
+pheromone_const=0.1 #константное значение выделяемого феромона каждым муравьём
+vanishing_const=1.1 # (1,10]~
 symmetrically=False #феромон оставляется в одну сторону или в обе
-pheromone_min=2.5
+pheromone_min=12.5
 pheromone_max=100.0
+
+elitist=True#увеличение феромона на лучшем пути
+elitist_const=0.9
 
 #инициализация матрицы растояний рандомными числами от 1 до 50
 mylist = []
@@ -150,6 +153,14 @@ class Place():
         for count in range(number_of_ants):
             x = self.Ant()
             self.ants_colony.append(x)
+            
+    def elitist_ant(self):
+        for x in range(0, len(shortest_path)-1):#не симметрично
+            path=shortest_path[x] 
+            nextpath=shortest_path[x+1] 
+            if(pheromone_matrix[path][nextpath]<pheromone_max):
+                pheromone_matrix[path][nextpath]+=distance_matrix[path][nextpath]*elitist_const
+        
            
             
     def in_process(self): #Есть ли хотя бы один работающий муравей, можно убрать в теории так как каждый муровей не может проти больше чем V узлов
@@ -163,7 +174,7 @@ class Place():
         for x in range(0,V):
             for y in range(0,V):
                 if(pheromone_matrix[x][y]>pheromone_min):
-                    pheromone_matrix[x][y]=pheromone_matrix[x][y]/(vanishing_const*distance_matrix[x][y])
+                    pheromone_matrix[x][y]=(pheromone_matrix[x][y]/distance_matrix[x][y])/vanishing_const                
     
     
     def start_exploration(self, epoch=1):
@@ -176,10 +187,21 @@ class Place():
                         
             for ant in self.ants_colony:#обнуление параметров муравья
                 ant.__init__()
+            
+            if(elitist==True):
+                self.elitist_ant()
+                
             print( x+1 ,'epoch ended, best result:', shortest_distance, 'shortest path',shortest_path)
             
-                        
             
+            maxF=0.0#!!!
+            for q in range(0, V):
+                for z in range(0, V):
+                    if(pheromone_matrix[q][z]>maxF):
+                        maxF=pheromone_matrix[q][z]
+            print(maxF)
+            
+                              
             
             
             
