@@ -194,12 +194,12 @@ class Place():
             print( x+1 ,'epoch ended, best result:', shortest_distance, 'shortest path',shortest_path)
             
             
-            maxF=0.0#!!!
-            for q in range(0, V):
-                for z in range(0, V):
-                    if(pheromone_matrix[q][z]>maxF):
-                        maxF=pheromone_matrix[q][z]
-            print(maxF)
+#            maxF=0.0#!!!Debug
+#            for q in range(0, V):
+#                for z in range(0, V):
+#                    if(pheromone_matrix[q][z]>maxF):
+#                        maxF=pheromone_matrix[q][z]
+#            print(maxF)
             
                               
             
