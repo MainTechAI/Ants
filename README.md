@@ -1,10 +1,8 @@
 # test
-Работает, но есть баги, нужно многое переделать, подобрать оптимальные параметры + рефакторинг
-
 
 1 epoch ended, best result: 202.0 shortest path [0, 6, 13, 14, 9, 11, 4, 5, 10, 3, 7, 1, 2, 8, 12]
-../Dropbox/1/test.py:105: RuntimeWarning: invalid value encountered in double_scalars
-  self.attraction[path] /= total
+RuntimeWarning: invalid value encountered in double_scalars
+self.attraction[path] /= total
   
 2 epoch ended, best result: 192.0 shortest path [0, 5, 10, 3, 4, 7, 12, 6, 13, 14, 9, 11, 2, 1, 8]
 
