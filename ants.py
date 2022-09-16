@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # =============================================================================
 # A traveling salesman needs to visit each city within a certain territory and 
 # return to the point of departure. It is required that the path be as short 
@@ -10,20 +8,23 @@
 # A Hamiltonian cycle is a cycle (a closed path) that passes through each vertex
 # of a given graph exactly once.
 # =============================================================================
-
 import numpy as np
 import random
 from random import randrange
 from numpy.random import choice
-
 random.seed(7)
+
+
+#------------/Parameters/-------------
 
 random_distance_matrix = True
 V = 20 # number of edges in complete graph
 b = 0 # chance of leaving the main path with the highest number of pheromones
 
 number_of_ants = 100
-one_start_location = False # if the value is false, then ants will appear in a random place
+
+# if the value is false, then ants will appear in a random place
+one_start_location = False 
 
 pheromone_min = 12.5
 pheromone_max = 100.0
@@ -37,7 +38,13 @@ symmetrically = False
 # This value determines whether an increase in the amount of pheromone 
 # on the best path is allowed
 elitist = True 
-elitist_const = 0.9 # the constant value of the pheromone secreted by the elite ant
+
+# the constant value of the pheromone secreted by the elite ant
+elitist_const = 0.9
+
+
+
+#-----/Distance matrix Initialization/------
 
 if(random_distance_matrix == True): # Initialize the distance matrix with random numbers from 1 to 50
     mylist = []
