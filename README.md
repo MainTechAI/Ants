@@ -1,6 +1,4 @@
-# Ant colony optimization algorithm applied to travelling salesman problem
-
-Output example
+# Output example
 
 1 epoch ended, best result: 202.0 shortest path [0, 6, 13, 14, 9, 11, 4, 5, 10, 3, 7, 1, 2, 8, 12]
 
