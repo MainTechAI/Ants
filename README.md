@@ -1,4 +1,9 @@
-# Output example
+# Ant colony optimization
+
+At the time I wrote this code, I was a fairly inexperienced Python developer. 
+So, the architecture of the application turned out to be pretty weird. Perhaps I should rewrite it.
+
+## Output example
 
 1 epoch ended, best result: 202.0 shortest path [0, 6, 13, 14, 9, 11, 4, 5, 10, 3, 7, 1, 2, 8, 12]
 
@@ -31,4 +36,4 @@
 50 epoch ended, best result: 140.0 shortest path [0, 13, 11, 4, 2, 8, 1, 7, 12, 9, 5, 6, 14, 10, 3]
 
 
-Exploration completed, best result: 140.0
+#### Exploration completed, best result: 140.0
